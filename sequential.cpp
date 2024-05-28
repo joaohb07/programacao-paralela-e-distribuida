@@ -83,7 +83,6 @@ bool Is_in_line(Point a, Point b, Point c)
 
 float Get_Angle(Point P, Point Q1, Point Q2)
 {
-    // P vai estar no centro
     Point PQ1(Q1.x - P.x, Q1.y - P.y);
     Point PQ2(Q2.x - P.x, Q2.y - P.y);
     float Q1PQ2 = PQ1.x * PQ2.x + PQ1.y * PQ2.y;
@@ -327,7 +326,7 @@ int main()
 
     std::chrono::duration<double> duration = end - start;
 
-    std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
+    std::cout << "\n\nTempo levado: " << duration.count() << " segundos" << std::endl;
 
     return 10;
 }
