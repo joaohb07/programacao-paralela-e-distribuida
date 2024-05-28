@@ -2,7 +2,11 @@
 
 ---
 
-Integrantes: - João Pedro Brum - - João Vitor Figueredo - - João Henrique Botelho -
+Integrantes:
+
+- João Henrique Botelho, 201154048
+- João Vitor Figueredo
+- João Pedro Brum
 
 ## Instruções
 
