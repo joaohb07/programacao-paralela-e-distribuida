@@ -5,8 +5,8 @@
 Integrantes:
 
 - João Henrique Botelho, 201154048
-- João Vitor Figueredo
-- João Pedro Brum
+- João Vitor Figueredo, 201154072
+- João Pedro Brum, 201152428
 
 ## Instruções
 
