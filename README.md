@@ -12,4 +12,6 @@ Integrantes:
 
 Como projeto final seu grupo deve paralelizar uma aplicação usando algumas das linguagens vistas durante a disciplina. Também são aceitas outras linguagens, mas a responsabilidade pelo correto entendimento do suporte de paralelismo da linguagem escolhida é do grupo.
 
-## Projeto Escolhido
+## Projeto Escolhido - Diagrama de voronoi
+
+Diagrama de Voronoi é a decomposição espacial, neste projeto, de um plano cartesiano em setores de voronoi (ou celulas Dirichlet) 
