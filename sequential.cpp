@@ -280,8 +280,6 @@ deque<Cell> Voronoi(Cell box, deque<Point> listpoints)
 
     Cell cell = box;
     deque<Cell> cells;
-    int i = 0;
-    int j = 0;
     for (Point p : listpoints)
     {
         cell.p = p; 
@@ -295,9 +293,7 @@ deque<Cell> Voronoi(Cell box, deque<Point> listpoints)
                 //Pois cada proximo ponto é a outra ponta da borda do ponto atual.
                 cell.listpoints = Sort_Points_Anti_Clockwise(cell.listpoints, p);
             }
-            j++;
         }
-        i++;
         cells.push_back(cell);
         cell = box;
     }
