@@ -113,7 +113,7 @@ Celula: 6
 ```
 
 ##### Desmonstração Grafica
-![Passo 2](Images\Resultadografico.png "Passo 2")
+![Passo 2](Images/Resultadografico.png "Passo 2")
 
 ## Calculos complementares
 ##### Bisetor:
