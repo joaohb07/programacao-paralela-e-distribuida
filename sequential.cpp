@@ -76,12 +76,8 @@ float Get_Distance(Point A, Point B)
 //Ele faz o senguinte calculo, se o ponto c, estiver contido na linha ab, então a distancia de ac + bc é igual a ab
 bool Is_in_line(Point a, Point b, Point c)
 {   //A função round (que retira algumas casas decimais) para evitar que alguns problemas gerados pela raiz quadrada ou divisões ou arredondamentos automaticos não interfiram com o calculo
-    if (round(Get_Distance(a, c) + Get_Distance(b, c)) == round(Get_Distance(a, b)))
-    {
-
-        return true;
-    }
-    return false;
+    bool is_in_line  = round(Get_Distance(a, c) + Get_Distance(b, c)) == round(Get_Distance(a, b));
+    return is_in_line;
 }
 
 //Ele obtem o angulo que Q1 e Q2 tem com P no centro

@@ -60,7 +60,7 @@ X_mx = valor x maximo do set
 Y_mn = valor y minimo do set
 Y_mx = valor y maximo do set
 
-padding = valor para que nenhum ponto do set
+padding = valor para que nenhum ponto do set caia na linha do limite do plano cartesiano
 
 Box = {(X_mn + padding,Y_mn + padding),(X_mx + padding,Y_mn + padding),(X_mx + padding,Y_mx + padding),(X_mn + padding,Y_mx + padding)}
 
@@ -87,7 +87,7 @@ Point_set = {50, 100, 106, 49, 66, 175, 137, 197, 195, 147, 178, 73, 123, 123}
 ```
 
 ##### Output  
-```
+```v
 Celula: 0
 [0,149.873] [79.7716,132.855] [92.9764,90.9446] [10.1518,-0] [0,0]
 Celula: 1
