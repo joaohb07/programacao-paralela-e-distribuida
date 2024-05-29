@@ -78,6 +78,14 @@ Para cada ponto P em set faça:
                 
 ```
 
+## Como rodar
+```
+\\ Para rodar o sequential
+    g++ sequential.cpp -o sequential.exe
+    ./sequential.exe
+```
+## Pré-requisito
+- Ter o g++ instalado.
 ## Exemple
 
 ##### Input  
@@ -106,6 +114,15 @@ Celula: 6
 
 ##### Desmonstração Grafica
 ![Passo 2](Images\Resultadografico.png "Passo 2")
+
+## Calculos complementares
+##### Bisetor:
+![alt text](Images\Bisector.png)
+##### Intersecção:
+![alt text](Images\Intersection.png)
+##### Angulo:
+![alt text](Images\Angle.png)
+- B esta no centro
 
 ## FONTES
 https://youtu.be/I6Fen2Ac-1U?si=YycZ3wpFmRtNuTD3
