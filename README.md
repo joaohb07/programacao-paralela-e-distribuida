@@ -30,25 +30,25 @@ E depois se inicia uma iteração dos n pontos no set em que dado o ponto P, a c
 
 - Primeiro se define como borda do setor em P a borda do plano cartesiano.
 
-![Passo 2](Step_n_1.png "Passo 2")
+![Passo 2](step_n_1.png "Passo 2")
 
 - Acha o Bi-setor de P e Q e defina os pontos de intersecção (pode haver de 0 a 2) com as bordas do setor em P.
 
-![Passo 3](Step_n_2.png "Passo 3")
+![Passo 3](step_n_2.png "Passo 3")
 
 - Retira-se os pontos que estiverem fora da parte do setor que contem o ponto P.
 
-![Passo 4](Step_n_3.png "Passo 4")
+![Passo 4](step_n_3.png "Passo 4")
 
 - Define-se o novo setor.
 
-![Passo 5](Step_n_4.png "Passo 5")
+![Passo 5](step_n_4.png "Passo 5")
 
 - Repita esse processo com todos os demais pontos no set.
 
-![Q em p3](Step_2.png "Q em p3")
+![Q em p3](step_2.png "Q em p3")
 
-![Q em p4](Step_3.png "Q em p4")
+![Q em p4](step_3.png "Q em p4")
 - Setor em P = (T6,A,T1,T3,T5)
 - No final adicione o setor ao array de setores.
 
