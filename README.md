@@ -16,13 +16,13 @@ Como projeto final seu grupo deve paralelizar uma aplicação usando algumas das
 
 Diagrama de Voronoi é a decomposição espacial, neste projeto, de um plano cartesiano em setores de voronoi (ou celulas Dirichlet), realizando a definição das bordas do setor utilizando o bi-setor dos pontos presentes em um dado set. 
 
-![Exemplo](Images\Exemplo_Diagrama_Voronoi.png "Exemplo")
+![Exemplo](./img/Exemplo_Diagrama_Voronoi.png "Exemplo")
 
 ## Algoritimo
 
 O algoritmo segue a seguintes etapas. Primeiro, se define as bordas do Plano cartesiano que emglobe todos os pontos no set
 
-![Passo 1](Images\Step_1.png "Passo 1")
+![Passo 1](./img/Step_1.png "Passo 1")
 
 **(Tome P1 como P e P2 como Q)**
 
@@ -30,25 +30,25 @@ E depois se inicia uma iteração dos n pontos no set em que dado o ponto P, a c
 
 - Primeiro se define como borda do setor em P a borda do plano cartesiano.
 
-![Passo 2](Images\step_n_1.png "Passo 2")
+![Passo 2](./img/step_n_1.png "Passo 2")
 
 - Acha o Bi-setor de P e Q e defina os pontos de intersecção (pode haver de 0 a 2) com as bordas do setor em P.
 
-![Passo 3](Images\step_n_2.png "Passo 3")
+![Passo 3](./img/step_n_2.png "Passo 3")
 
 - Retira-se os pontos que estiverem fora da parte do setor que contem o ponto P.
 
-![Passo 4](Images\step_n_3.png "Passo 4")
+![Passo 4](./img/step_n_3.png "Passo 4")
 
 - Define-se o novo setor.
 
-![Passo 5](Images\step_n_4.png "Passo 5")
+![Passo 5](./img/step_n_4.png "Passo 5")
 
 - Repita esse processo com todos os demais pontos no set.
 
-![Q em p3](Images\step_2.png "Q em p3")
+![Q em p3](./img/step_2.png "Q em p3")
 
-![Q em p4](Images\step_3.png "Q em p4")
+![Q em p4](./img/step_3.png "Q em p4")
 - Setor em P = (T6,A,T1,T3,T5)
 - No final adicione o setor ao array de setores.
 
@@ -113,15 +113,15 @@ Celula: 6
 ```
 
 ##### Desmonstração Grafica
-![Passo 2](Images/Resultadografico.png "Passo 2")
+![Passo 2](./img/Resultadografico.png)
 
 ## Calculos complementares
 ##### Bisetor:
-![alt text](Images\Bisector.png)
+![alt text](./img/Bisector.png)
 ##### Intersecção:
-![alt text](Images\Intersection.png)
+![alt text](./img/Intersection.png)
 ##### Angulo:
-![alt text](Images\Angle.png)
+![alt text](./img/Angle.png)
 - B esta no centro
 
 ## FONTES
