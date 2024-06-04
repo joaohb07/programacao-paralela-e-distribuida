@@ -7,8 +7,8 @@
 #include <deque>
 #include <chrono>
 
-#define MAXIMO = 3.40283 * pow(10, 38);
-#define BOXMAX = 200;
+#define MAXIMO (3.40283 * pow(10, 38))
+#define BOXMAX 200
 
 using namespace std;
 
