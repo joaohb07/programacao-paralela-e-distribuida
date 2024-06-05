@@ -123,78 +123,76 @@ Point intersec_Bi_Pnt(deque<float> Bi, Point A, Point B)
   return intersec;
 }
 
-// Esta função ordena os pontos em sentido anti horario
-// Eu devia ter criado uma classe linha e ir modificando por ela
-// Essa função é a mais ineficiente de todo código na minha opinião (Brum)
-deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p)
-{
-  deque<Point> oldlist = list;
-  deque<Point> newlist;
-  Point q(0, p.y);
-  Point min(0, 100);
-  bool points_left;
+deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p){
+    deque<Point> oldlist = list;
+    deque<Point> newlist_under_y;
+    deque<Point> newlist_above_y;
+    deque<Point> newlist_a;
+    deque<Point> newlist_b;
+    Point q(0, p.y);
 
-  // Neste loop ele fica basicamente selecionando o ponto mais a esquerda até o mais a direita
-  do
-  {
-    deque<Point>::iterator i, j;
-    i = oldlist.begin();
-    j = oldlist.begin();
-    points_left = false;
-    float min_angle = 360;
-    // Ele vai e testa cada ponto até achar o mais a esquerda
-    for (Point b : oldlist)
-    {
-      // Condição que verifica o menor angulo do set
-      // q é um ponto fixo a esquerda
-      // p é o ponto que a celula se orienta
-      // b o ponto testado
-      // A condição q.y >= b.y garante o sentido horario
-      if (min_angle >= Get_Angle(p, q, b) and q.y >= b.y)
-      {
-        min_angle = Get_Angle(p, q, b);
-        min = b;
-        j = i;
-        points_left = true;
-      }
-      i++;
+    for (Point b : oldlist){
+        if (b.y <= q.y){
+            newlist_under_y.push_front(b);
+        }
+        else{
+            newlist_above_y.push_front(b);
+        }
     }
-    // Esse condição apaga os pontos já percorridos na lista velha e add na lista organizada
-    if (points_left)
-    {
-      newlist.push_front(min);
-      oldlist.erase(j);
-    };
-    // O loop continua ate o points left der como falso ou acabarem -se os pontos na lista antiga
-  } while (points_left != false and oldlist.size() != 0);
 
-  q.x = BOXMAX;
-  // joga Q para o outro lado e realiza o sort agora da direita para esquerda
-  do
-  {
-    deque<Point>::iterator i, j;
-    i = oldlist.begin();
-    j = oldlist.begin();
-    points_left = false;
-    float min_angle = 360;
-    for (Point b : oldlist)
-    {
-      if (min_angle >= Get_Angle(p, q, b) and q.y <= b.y)
-      {
-        min_angle = Get_Angle(p, q, b);
-        min = b;
-        j = i;
-        points_left = true;
-      }
-      i++;
+    for(Point b : newlist_under_y){
+        deque<Point>::iterator index = newlist_a.begin();
+        bool pos_found = false;
+        for(Point c : newlist_a){
+            if (Get_Angle(p,q,b)<Get_Angle(p,q,c) and !pos_found){
+                pos_found = true;
+            }
+            if(!pos_found){
+                index++;
+            }
+        }
+        if(pos_found){
+            newlist_a.insert(index,1,b);
+        }
+        else{
+            newlist_a.push_back(b);
+        }
+        
     }
-    if (points_left)
-    {
-      newlist.push_front(min);
-      oldlist.erase(j);
+
+    q.x = BOXMAX;///////////////////////////////////////////////
+
+    for(Point b : newlist_above_y){
+        deque<Point>::iterator index = newlist_b.begin();
+        bool pos_found = false;
+        for(Point c : newlist_b){
+            if (Get_Angle(p,q,b)<Get_Angle(p,q,c) and !pos_found){
+                pos_found = true;
+            }
+            if(!pos_found){
+                index++;
+            }
+        }
+        if(pos_found){
+            newlist_b.insert(index,1,b);
+        }
+        else{
+            newlist_b.push_back(b);
+        }
+        
     }
-  } while (points_left != false and oldlist.size() != 0);
-  return newlist;
+
+    deque<Point> newlist;
+
+    for (Point p : newlist_a){
+        newlist.push_back(p);
+    }
+
+    for (Point p : newlist_b){
+        newlist.push_back(p);
+    }
+
+    return newlist;
 }
 
 // Função que executa aquele loop inteiro (achar o bistor, intersecção na bora) em um ponto q
