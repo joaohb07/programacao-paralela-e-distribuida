@@ -134,7 +134,7 @@ deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p,float boxmax)
     deque<Point> newlist_a;
     deque<Point> newlist_b;
     Point q(0, p.y);
-
+    
     #pragma omp parallel for
     for (Point b : oldlist){
         if (b.y <= q.y){
@@ -146,11 +146,11 @@ deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p,float boxmax)
             newlist_above_y.push_front(b);
         }
     }
-
-    #pragma omp parallel for
+    bool pos_found = false;
+    deque<Point>::iterator index;
+    #pragma omp parallel for private(pos_found,index)
     for(Point b : newlist_under_y){
-        deque<Point>::iterator index = newlist_a.begin();
-        bool pos_found = false;
+        index = newlist_a.begin();
         for(Point c : newlist_a){
             if (Get_Angle(p,q,b)<Get_Angle(p,q,c) and !pos_found){
                 pos_found = true;
@@ -160,20 +160,22 @@ deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p,float boxmax)
             }
         }
         if(pos_found){
+            #pragma omp critical
             newlist_a.insert(index,1,b);
         }
         else{
+            #pragma omp critical
             newlist_a.push_back(b);
-        }
-        
+        }   
+      pos_found = false;
     }
 
     q.x = boxmax;///////////////////////////////////////////////
 
-    #pragma omp parallel for
+    #pragma omp parallel for private(pos_found,index)
     for(Point b : newlist_above_y){
-        deque<Point>::iterator index = newlist_b.begin();
-        bool pos_found = false;
+        index = newlist_b.begin();
+        pos_found = false;
         for(Point c : newlist_b){
             if (Get_Angle(p,q,b)<Get_Angle(p,q,c) and !pos_found){
                 pos_found = true;
@@ -183,12 +185,13 @@ deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p,float boxmax)
             }
         }
         if(pos_found){
+            #pragma omp critical
             newlist_b.insert(index,1,b);
         }
         else{
+            #pragma omp critical
             newlist_b.push_back(b);
         }
-        
     }
 
     deque<Point> newlist;
@@ -312,7 +315,7 @@ int main(int argc, char* argv[])
   printf("BS %f,GS %f",boxsize,gridsize);
   deque<float> lpntsf = randompointgen(boxsize,gridsize);
   deque<Point> lpnts = Array_to_PointList(lpntsf);
-
+  printf("Passou do point gen");
 
   // Optei por dar direto os limites do plano
   Point A(0, 0);
@@ -334,7 +337,11 @@ int main(int argc, char* argv[])
 
   auto start = std::chrono::high_resolution_clock::now();
 
+  printf("Passou do init");
+
   deque<Cell> cells = Voronoi(box, lpnts, boxsize);
+
+  printf("Passou do voronoi");
 
   auto end = std::chrono::high_resolution_clock::now();
 
