@@ -7,6 +7,8 @@
 #include <deque>
 #include <chrono>
 #include <omp.h>
+#include <C:\Users\Jao Brum\Documents\PROJETO ALEXANDRO\programacao-paralela-e-distribuida\points_gen.h>
+
 
 #define MAXIMO (3.40283 * pow(10, 38))
 #define BOXMAX 200
@@ -57,10 +59,11 @@ deque<float> Get_Bisector(Point A, Point B)
   return abc;
 }
 
-deque<Point> Array_to_PointList(float *arr, int size)
+
+deque<Point> Array_to_PointList(deque<float>arr)
 {
   deque<Point> points;
-  for (int i = 0; i < size - 1; i = i + 2)
+  for (int i = 0; i < arr.size(); i = i + 2)
   {
     Point alfa(arr[i], arr[i + 1]);
     points.push_back(alfa);
@@ -124,14 +127,14 @@ Point intersec_Bi_Pnt(deque<float> Bi, Point A, Point B)
   return intersec;
 }
 
-deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p){
+deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p,float boxmax){
     deque<Point> oldlist = list;
     deque<Point> newlist_under_y;
     deque<Point> newlist_above_y;
     deque<Point> newlist_a;
     deque<Point> newlist_b;
     Point q(0, p.y);
-
+    
     #pragma omp parallel for
     for (Point b : oldlist){
         if (b.y <= q.y){
@@ -143,11 +146,11 @@ deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p){
             newlist_above_y.push_front(b);
         }
     }
-
-    #pragma omp parallel for
+    bool pos_found = false;
+    deque<Point>::iterator index;
+    #pragma omp parallel for private(pos_found,index)
     for(Point b : newlist_under_y){
-        deque<Point>::iterator index = newlist_a.begin();
-        bool pos_found = false;
+        index = newlist_a.begin();
         for(Point c : newlist_a){
             if (Get_Angle(p,q,b)<Get_Angle(p,q,c) and !pos_found){
                 pos_found = true;
@@ -157,20 +160,22 @@ deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p){
             }
         }
         if(pos_found){
+            #pragma omp critical
             newlist_a.insert(index,1,b);
         }
         else{
+            #pragma omp critical
             newlist_a.push_back(b);
-        }
-        
+        }   
+      pos_found = false;
     }
 
-    q.x = BOXMAX;///////////////////////////////////////////////
+    q.x = boxmax;///////////////////////////////////////////////
 
-    #pragma omp parallel for
+    #pragma omp parallel for private(pos_found,index)
     for(Point b : newlist_above_y){
-        deque<Point>::iterator index = newlist_b.begin();
-        bool pos_found = false;
+        index = newlist_b.begin();
+        pos_found = false;
         for(Point c : newlist_b){
             if (Get_Angle(p,q,b)<Get_Angle(p,q,c) and !pos_found){
                 pos_found = true;
@@ -180,12 +185,13 @@ deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p){
             }
         }
         if(pos_found){
+            #pragma omp critical
             newlist_b.insert(index,1,b);
         }
         else{
+            #pragma omp critical
             newlist_b.push_back(b);
         }
-        
     }
 
     deque<Point> newlist;
@@ -271,7 +277,7 @@ deque<Point> New_Cell(Cell oldcell, Point p, Point q)
 }
 
 // Rotina para criação de setores;
-deque<Cell> Voronoi(Cell box, deque<Point> listpoints)
+deque<Cell> Voronoi(Cell box, deque<Point> listpoints,float boxmax)
 {
   Cell cell = box;
   deque<Cell> cells;
@@ -287,7 +293,7 @@ deque<Cell> Voronoi(Cell box, deque<Point> listpoints)
         // Aqui é feito a ordenação dos pontos da celula em sentido anti horario
         // Fica mais facil trabalhar com as celulas com os pontos desse jeito quando passados em loop.
         // Pois cada proximo ponto é a outra ponta da borda do ponto atual.
-        cell.listpoints = Sort_Points_Anti_Clockwise(cell.listpoints, p);
+        cell.listpoints = Sort_Points_Anti_Clockwise(cell.listpoints, p, boxmax);
       }
     }
     cells.push_back(cell);
@@ -296,51 +302,91 @@ deque<Cell> Voronoi(Cell box, deque<Point> listpoints)
   return cells;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-  float lpntsf[14] = {50, 100, 106, 49, 66, 175, 137, 197, 195, 147, 178, 73, 123, 123};
 
-  auto start = std::chrono::high_resolution_clock::now();
+
+  float boxsize = strtol(argv[1], NULL, 10);
+  float gridsize = strtol(argv[0], NULL, 10);
+  
+  boxsize = strtol(argv[1], NULL, 10);
+  gridsize = strtoll(argv[2], NULL, 10);
+
+  printf("BS %f,GS %f",boxsize,gridsize);
+  deque<float> lpntsf = pointgen(boxsize,gridsize);
+  deque<Point> lpnts = Array_to_PointList(lpntsf);
+  printf("Passou do point gen");
 
   // Optei por dar direto os limites do plano
   Point A(0, 0);
-  Point B(200, 0);
-  Point C(200, 200);
-  Point D(0, 200);
+  Point B(boxsize, 0);
+  Point C(boxsize, boxsize);
+  Point D(0, boxsize);
 
   // Inicia o array de pontos do set
-  deque<Point> lpnts = Array_to_PointList(lpntsf, 14);
+
 
   deque<Point> lbox;
   lbox.push_back(A);
   lbox.push_back(B);
   lbox.push_back(C);
   lbox.push_back(D);
-  Point bx(10, 10);
+  Point bx(boxsize/2, boxsize/2);
   Cell box(bx);
   box.listpoints = lbox;
 
-  deque<Cell> cells = Voronoi(box, lpnts);
+  auto start = std::chrono::high_resolution_clock::now();
 
-  cout << "\n\n###CELULAS###\n\n";
+  printf("Passou do init");
 
-  int i = 0;
-  for (Cell cell : cells)
-  {
-    cout << "Celula: " << i << "\n";
-    for (Point point : cell.listpoints)
-    {
-      cout << ",[" << point.x << "," << point.y << "] ";
-    }
-    cout << "\n";
-    i++;
-  }
+  deque<Cell> cells = Voronoi(box, lpnts, boxsize);
+
+  printf("Passou do voronoi");
 
   auto end = std::chrono::high_resolution_clock::now();
 
   std::chrono::duration<double> duration = end - start;
 
   std::cout << "\n\nTempo levado: " << duration.count() << " segundos" << std::endl;
+
+  int i = 0;
+
+  cout << "\n\n###PONTOS###\n\n";
+  for (Point point : lpnts)
+  {
+    i++;
+    cout << "[" << point.x << "," << point.y << "]";
+    if(i<lpnts.size())
+    {
+      cout << ",";
+    }
+  }
+
+
+  cout << "\n\n###CELULAS###\n\n";
+
+  i = 0;
+  int j = 0;
+  for (Cell cell : cells)
+  {
+    j++;
+    i=0;
+    cout << "[";
+    for (Point point : cell.listpoints)
+    {
+      i++;
+      cout << "[" << point.x << "," << point.y << "]";
+      if(i<cell.listpoints.size())
+        {
+            cout << ",";
+        }
+    }
+    cout << "]";
+    if(j<cells.size())
+        {
+            cout << ",";
+        }
+  }
 
   return 0;
 }
