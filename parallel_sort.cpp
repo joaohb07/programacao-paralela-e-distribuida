@@ -7,7 +7,7 @@
 #include <deque>
 #include <chrono>
 #include <omp.h>
-#include <C:\Users\Jao Brum\Documents\PROJETO ALEXANDRO\programacao-paralela-e-distribuida\random_points_gen.h>
+#include <C:\Users\Jao Brum\Documents\PROJETO ALEXANDRO\programacao-paralela-e-distribuida\points_gen.h>
 
 
 #define MAXIMO (3.40283 * pow(10, 38))
@@ -313,7 +313,7 @@ int main(int argc, char* argv[])
   gridsize = strtoll(argv[2], NULL, 10);
 
   printf("BS %f,GS %f",boxsize,gridsize);
-  deque<float> lpntsf = randompointgen(boxsize,gridsize);
+  deque<float> lpntsf = pointgen(boxsize,gridsize);
   deque<Point> lpnts = Array_to_PointList(lpntsf);
   printf("Passou do point gen");
 
