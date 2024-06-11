@@ -7,7 +7,7 @@
 #include <deque>
 #include <chrono>
 #include <omp.h>
-#include <C:\Users\Jao Brum\Documents\PROJETO ALEXANDRO\programacao-paralela-e-distribuida\points_gen.h>
+#include "../programacao-paralela-e-distribuida/points_gen.h"
 
 #define MAXIMO (3.40283 * pow(10, 38))
 #define BOXMAX 200
@@ -304,7 +304,9 @@ deque<Cell> Voronoi(Cell box, deque<Point> listpoints,float boxsize)
         local_cell.p = p;        // Define o ponto central da célula local.
 
         // Início da paralelização com OpenMP para o segundo loop
-#pragma omp parallel for
+//#pragma omp parallel for
+//Uma sem o pragma
+#pragma omp for
         for (int j = 0; j < listpoints.size(); j++)
         {
             Point q = listpoints[j];      // Seleciona um ponto para comparar com o ponto central p.
