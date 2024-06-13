@@ -345,42 +345,42 @@ int main(int argc, char* argv[])
 
   int i = 0;
 
-  cout << "\n\n###PONTOS###\n\n";
-  for (Point point : lpnts)
-  {
-    i++;
-    cout << "[" << point.x << "," << point.y << "]";
-    if(i<lpnts.size())
-    {
-       cout << ",";
-    }
-  }
+  // cout << "\n\n###PONTOS###\n\n";
+  // for (Point point : lpnts)
+  // {
+  //   i++;
+  //   cout << "[" << point.x << "," << point.y << "]";
+  //   if(i<lpnts.size())
+  //   {
+  //      cout << ",";
+  //   }
+  // }
 
 
-  cout << "\n\n###CELULAS###\n\n";
+  // cout << "\n\n###CELULAS###\n\n";
 
-  i = 0;
-  int j = 0;
-  for (Cell cell : cells)
-  {
-    j++;
-    i=0;
-    cout << "[";
-    for (Point point : cell.listpoints)
-    {
-      i++;
-      cout << "[" << point.x << "," << point.y << "]";
-      if(i<cell.listpoints.size())
-        {
-            cout << ",";
-        }
-    }
-    cout << "]";
-    if(j<cells.size())
-        {
-            cout << ",";
-        }
-  }
+  // i = 0;
+  // int j = 0;
+  // for (Cell cell : cells)
+  // {
+  //   j++;
+  //   i=0;
+  //   cout << "[";
+  //   for (Point point : cell.listpoints)
+  //   {
+  //     i++;
+  //     cout << "[" << point.x << "," << point.y << "]";
+  //     if(i<cell.listpoints.size())
+  //       {
+  //           cout << ",";
+  //       }
+  //   }
+  //   cout << "]";
+  //   if(j<cells.size())
+  //       {
+  //           cout << ",";
+  //       }
+  // }
 
   return 0;
 }
