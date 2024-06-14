@@ -14,7 +14,7 @@ Como projeto final seu grupo deve paralelizar uma aplicação usando algumas das
 
 ## Projeto Escolhido - Diagrama de voronoi
 
-Diagrama de Voronoi é a decomposição espacial, neste projeto, de um plano cartesiano em setores de voronoi (ou celulas Dirichlet), realizando a definição das bordas do setor utilizando o bi-setor dos pontos presentes em um dado set. 
+Diagrama de Voronoi é a decomposição espacial, neste projeto, de um plano cartesiano em setores de voronoi (ou celulas Dirichlet), realizando a definição das bordas do setor utilizando o bi-setor dos pontos presentes em um dado set.
 
 ![Exemplo](./img/Exemplo_Diagrama_Voronoi.png "Exemplo")
 
@@ -49,10 +49,11 @@ E depois se inicia uma iteração dos n pontos no set em que dado o ponto P, a c
 ![Q em p3](./img/step_2.png "Q em p3")
 
 ![Q em p4](./img/step_3.png "Q em p4")
+
 - Setor em P = (T6,A,T1,T3,T5)
 - No final adicione o setor ao array de setores.
 
-##### Pseudocódigo 
+##### Pseudocódigo
 
 ```
 X_mn = valor x minimo do set
@@ -65,7 +66,7 @@ padding = valor para que nenhum ponto do set caia na linha do limite do plano ca
 Box = {(X_mn + padding,Y_mn + padding),(X_mx + padding,Y_mn + padding),(X_mx + padding,Y_mx + padding),(X_mn + padding,Y_mx + padding)}
 
 Para cada ponto P em set faça:
-    setor_p = Box 
+    setor_p = Box
     Para cada Ponto Q em set faça:
         Bi = Bi-setor(P,Q)
         Para cada borda b em setor_p faça:
@@ -75,26 +76,32 @@ Para cada ponto P em set faça:
                 setor_p.pop(pontos_fora)
                 setot_p = sort_no_sentido_anti-horario(P,setor_p)
     setores.push(setor_p)
-                
+
 ```
 
 ## Como rodar
+
 ```
 \\ Para rodar o sequential
     g++ sequential.cpp -o sequential.exe
     ./sequential.exe
 ```
-## Pré-requisito
-- Ter o g++ instalado.
-## Exemple
 
-##### Input  
+### Pré-requisito
+
+- Ter o g++ instalado.
+
+## Exemplo
+
+##### Input
+
 ```
 //Cada par de valores é um ponto
 Point_set = {50, 100, 106, 49, 66, 175, 137, 197, 195, 147, 178, 73, 123, 123}
 ```
 
-##### Output  
+##### Output
+
 ```v
 Celula: 0
 [0,149.873] [79.7716,132.855] [92.9764,90.9446] [10.1518,-0] [0,0]
@@ -105,7 +112,7 @@ Celula: 2
 Celula: 3
 [97.162,200] [190.138,200] [152.058,155.827] [108.283,164.109]
 Celula: 4
-[152.058,155.827] [190.138,200] [200,200] [200,106.899] [165.744,114.768] 
+[152.058,155.827] [190.138,200] [200,200] [200,106.899] [165.744,114.768]
 Celula: 5
 [135.256,81.2317] [165.744,114.768] [200,106.899] [200,0] [162.333,0]
 Celula: 6
@@ -113,17 +120,50 @@ Celula: 6
 ```
 
 ##### Desmonstração Grafica
+
 ![Passo 2](./img/Resultadografico.png)
 
 ## Calculos complementares
-##### Bisetor:
-![alt text](./img/Bisector.png)
-##### Intersecção:
-![alt text](./img/Intersection.png)
-##### Angulo:
-![alt text](./img/Angle.png)
-- B esta no centro
 
-## FONTES
+##### Bisetor:
+
+![alt text](./img/Bisector.png)
+
+##### Intersecção:
+
+![alt text](./img/Intersection.png)
+
+##### Angulo:
+
+![alt text](./img/Angle.png)
+
+- B está no centro
+
+## Resultados dos códigos
+
+> **_Observação:_** a versão paralela 1 se refere ao código `parallel_voronoi_1.cpp` enquanto a versão paralela 2 se refere ao código `parallel_voronoi_1.cpp`
+
+#### Teste 1
+
+Passando os parâmetros 1000 para o tamanho total do plano e 50 para distância entre um ponto e outro para a execução:
+
+![1000 e 50](./img/1000_50.png)
+![1000 e 50](./img/param_1000_50.png)
+
+#### Teste 2
+
+Passando os parâmetros 1200 para o tamanho total do plano e 50 para distância entre um ponto e outro para a execução:
+
+![1000 e 50](./img/1200_50.png)
+![1000 e 50](./img/param_1200_50.png)
+
+## Conclusão
+
+Podemos concluir que as duas maneiras apresentadas são eficientes para paralelizar o algoritmo de Voronoi, provaram ser 2 vezes mais rápidas na execução, apresentando um tempo médio decorrido de 4 segundos no primeiro teste e 11 segundos no segundo teste, cerca de 64% mais rápido que a versão sequencial.
+
+Com isso, concluimos que a primeira alternativa de paralelização apresentada no código `parallel_voronoi_1.cpp` é preferível para paralelização do algoritmo por não paralelizar as 2 iterações que existem no algoritmo, como na segunda maneira apresentada.
+
+## Fontes
+
 https://youtu.be/I6Fen2Ac-1U?si=YycZ3wpFmRtNuTD3
 https://math.stackexchange.com/questions/361412/finding-the-angle-between-three-points
