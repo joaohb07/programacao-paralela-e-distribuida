@@ -8,7 +8,7 @@
 
 ## Instruções
 
-Para o projeto final, o grupo deve paralelizar uma aplicação utilizando algumas das linguagens estudadas ao longo da disciplina. Outras linguagens podem ser usadas, mas o entendimento do suporte ao paralelismo na linguagem escolhida é de responsabilidade do grupo.
+Como projeto final seu grupo deve paralelizar uma aplicação usando algumas das linguagens vistas durante a disciplina. Também são aceitas outras linguagens, mas a responsabilidade pelo correto entendimento do suporte de paralelismo da linguagem escolhida é do grupo.
 
 ## Projeto Escolhido: Diagrama de Voronoi
 
