@@ -1,5 +1,5 @@
 .DS_Store
 .vscode/
 sequential.exe
-parallel_voronoi.exe
-parallel_sort.exe
+parallel_voronoi_1.exe
+parallel_voronoi_2.exe
