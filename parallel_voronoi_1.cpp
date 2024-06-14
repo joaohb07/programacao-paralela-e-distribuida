@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <cmath>
 #include <iostream>
 #include <cstdio>
 #include <deque>
@@ -10,8 +8,6 @@
 #include "../programacao-paralela-e-distribuida/points_gen.h"
 
 #define MAXIMO (3.40283 * pow(10, 38))
-#define BOXMAX 200
-
 using namespace std;
 
 class Point
@@ -130,6 +126,7 @@ Point intersec_Bi_Pnt(deque<float> Bi, Point A, Point B)
     return intersec;
 }
 
+//Função para organização dos pontos em sentindo Anti horario
 deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p, float boxsize)
 {
     deque<Point> oldlist = list;
