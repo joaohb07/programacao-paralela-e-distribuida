@@ -1,8 +1,6 @@
-# Projeto de Introdução a Programação Paralela e Distribuída
+# Projeto de Introdução à Programação Paralela e Distribuída
 
----
-
-Integrantes:
+## Integrantes
 
 - João Henrique Botelho, 201154048
 - João Vitor Figueredo, 201154072
@@ -10,97 +8,117 @@ Integrantes:
 
 ## Instruções
 
-Como projeto final seu grupo deve paralelizar uma aplicação usando algumas das linguagens vistas durante a disciplina. Também são aceitas outras linguagens, mas a responsabilidade pelo correto entendimento do suporte de paralelismo da linguagem escolhida é do grupo.
+Para o projeto final, o grupo deve paralelizar uma aplicação utilizando algumas das linguagens estudadas ao longo da disciplina. Outras linguagens podem ser usadas, mas o entendimento do suporte ao paralelismo na linguagem escolhida é de responsabilidade do grupo.
 
-## Projeto Escolhido - Diagrama de voronoi
+## Projeto Escolhido: Diagrama de Voronoi
 
-Diagrama de Voronoi é a decomposição espacial, neste projeto, de um plano cartesiano em setores de voronoi (ou celulas Dirichlet), realizando a definição das bordas do setor utilizando o bi-setor dos pontos presentes em um dado set.
+O Diagrama de Voronoi é uma decomposição espacial que divide um plano cartesiano em setores de Voronoi (ou células de Dirichlet), determinando as bordas de cada setor usando o bissetor dos pontos presentes em um conjunto.
 
 ![Exemplo](./img/Exemplo_Diagrama_Voronoi.png "Exemplo")
 
-## Algoritimo
+## Algoritmo
 
-O algoritmo segue a seguintes etapas. Primeiro, se define as bordas do Plano cartesiano que emglobe todos os pontos no set
+O algoritmo segue as etapas descritas abaixo. Primeiramente, define-se as bordas do plano cartesiano que englobam todos os pontos do conjunto.
 
 ![Passo 1](./img/Step_1.png "Passo 1")
 
-**(Tome P1 como P e P2 como Q)**
+**(Considere P1 como P e P2 como Q)**
 
-E depois se inicia uma iteração dos n pontos no set em que dado o ponto P, a cada ponto Q se segue a seguinte rotina:
+Em seguida, itera-se pelos n pontos do conjunto, onde, dado o ponto P, para cada ponto Q, realiza-se a seguinte rotina:
 
-- Primeiro se define como borda do setor em P a borda do plano cartesiano.
+1. Inicialmente, define-se a borda do setor em P como a borda do plano cartesiano.
 
 ![Passo 2](./img/step_n_1.png "Passo 2")
 
-- Acha o Bi-setor de P e Q e defina os pontos de intersecção (pode haver de 0 a 2) com as bordas do setor em P.
+2. Calcula-se o bissetor de P e Q e determina-se os pontos de interseção (podem variar de 0 a 2) com as bordas do setor em P.
 
 ![Passo 3](./img/step_n_2.png "Passo 3")
 
-- Retira-se os pontos que estiverem fora da parte do setor que contem o ponto P.
+3. Removem-se os pontos que estiverem fora da parte do setor que contém o ponto P.
 
 ![Passo 4](./img/step_n_3.png "Passo 4")
 
-- Define-se o novo setor.
+4. Define-se o novo setor.
 
 ![Passo 5](./img/step_n_4.png "Passo 5")
 
-- Repita esse processo com todos os demais pontos no set.
+5. Repete-se esse processo com todos os demais pontos do conjunto.
 
 ![Q em p3](./img/step_2.png "Q em p3")
 
 ![Q em p4](./img/step_3.png "Q em p4")
 
-- Setor em P = (T6,A,T1,T3,T5)
-- No final adicione o setor ao array de setores.
+- Setor em P = (T6, A, T1, T3, T5)
+- No final, adiciona-se o setor ao array de setores.
 
-##### Pseudocódigo
+### Pseudocódigo
 
-```
-X_mn = valor x minimo do set
-X_mx = valor x maximo do set
-Y_mn = valor y minimo do set
-Y_mx = valor y maximo do set
+```pseudo
+X_mn = valor x mínimo do conjunto
+X_mx = valor x máximo do conjunto
+Y_mn = valor y mínimo do conjunto
+Y_mx = valor y máximo do conjunto
 
-padding = valor para que nenhum ponto do set caia na linha do limite do plano cartesiano
+padding = valor para que nenhum ponto do conjunto caia na linha do limite do plano cartesiano
 
-Box = {(X_mn + padding,Y_mn + padding),(X_mx + padding,Y_mn + padding),(X_mx + padding,Y_mx + padding),(X_mn + padding,Y_mx + padding)}
+Box = {(X_mn + padding, Y_mn + padding), (X_mx + padding, Y_mn + padding), (X_mx + padding, Y_mx + padding), (X_mn + padding, Y_mx + padding)}
 
-Para cada ponto P em set faça:
+Para cada ponto P no conjunto faça:
     setor_p = Box
-    Para cada Ponto Q em set faça:
-        Bi = Bi-setor(P,Q)
+    Para cada ponto Q no conjunto faça:
+        Bi = Bissetor(P, Q)
         Para cada borda b em setor_p faça:
-            secção = intersecção(Bi,b)
-            Se houver intersecção:
-                setor_p.push(intersecção)
-                setor_p.pop(pontos_fora)
-                setot_p = sort_no_sentido_anti-horario(P,setor_p)
-    setores.push(setor_p)
-
+            intersecao = interseção(Bi, b)
+            Se houver interseção:
+                setor_p.adicionar(intersecao)
+                setor_p.remover(pontos_fora)
+                setor_p = ordenar_sentido_anti-horário(P, setor_p)
+    setores.adicionar(setor_p)
 ```
 
-## Como rodar
+## Como Rodar
 
+### Versão Sequencial
+
+Para compilar e executar a versão sequencial:
+
+```bash
+g++ sequential.cpp -o sequential.exe
+./sequential.exe
 ```
-\\ Para rodar o sequential
-    g++ sequential.cpp -o sequential.exe
-    ./sequential.exe
+
+### Versão Paralela 1
+
+Para compilar e executar a versão paralela 1 utilizando OpenMP:
+
+```bash
+g++ -fopenmp parallel_voronoi_1.cpp -o parallel_voronoi_1.exe
+./parallel_voronoi_1.exe
+```
+
+### Versão Paralela 2
+
+Para compilar e executar a versão paralela 2 utilizando OpenMP:
+
+```bash
+g++ -fopenmp parallel_voronoi_2.cpp -o parallel_voronoi_2.exe
+./parallel_voronoi_2.exe
 ```
 
 ### Pré-requisito
 
-- Ter o g++ instalado.
+- Ter o g++ e OpenMP instalados.
 
 ## Exemplo
 
-##### Input
+### Input
 
 ```
-//Cada par de valores é um ponto
+//Cada par de valores representa um ponto
 Point_set = {50, 100, 106, 49, 66, 175, 137, 197, 195, 147, 178, 73, 123, 123}
 ```
 
-##### Output
+### Output
 
 ```v
 Celula: 0
@@ -119,51 +137,51 @@ Celula: 6
 [79.7716,132.855] [108.283,164.109] [152.058,155.827] [165.744,114.768] [135.256,81.2317] [92.9764,90.9446]
 ```
 
-##### Desmonstração Grafica
+### Demonstração Gráfica
 
-![Passo 2](./img/Resultadografico.png)
+![Resultado Gráfico](./img/Resultadografico.png)
 
-## Calculos complementares
+## Cálculos Complementares
 
-##### Bisetor:
+### Bissetor
 
-![alt text](./img/Bisector.png)
+![Bissetor](./img/Bisector.png)
 
-##### Intersecção:
+### Interseção
 
-![alt text](./img/Intersection.png)
+![Interseção](./img/Intersection.png)
 
-##### Angulo:
+### Ângulo
 
-![alt text](./img/Angle.png)
+![Ângulo](./img/Angle.png)
 
 - B está no centro
 
-## Resultados dos códigos
+## Resultados dos Códigos
 
-> **_Observação:_** a versão paralela 1 se refere ao código `parallel_voronoi_1.cpp` enquanto a versão paralela 2 se refere ao código `parallel_voronoi_1.cpp`
+> **Observação:** A versão paralela 1 refere-se ao código `parallel_voronoi_1.cpp` enquanto a versão paralela 2 refere-se ao código `parallel_voronoi_2.cpp`.
 
-#### Teste 1
+### Teste 1
 
-Passando os parâmetros 1000 para o tamanho total do plano e 50 para distância entre um ponto e outro para a execução:
+Parâmetros: tamanho do plano = 1000, distância entre pontos = 50
 
 ![1000 e 50](./img/1000_50.png)
 ![1000 e 50](./img/param_1000_50.png)
 
-#### Teste 2
+### Teste 2
 
-Passando os parâmetros 1200 para o tamanho total do plano e 50 para distância entre um ponto e outro para a execução:
+Parâmetros: tamanho do plano = 1200, distância entre pontos = 50
 
-![1000 e 50](./img/1200_50.png)
-![1000 e 50](./img/param_1200_50.png)
+![1200 e 50](./img/1200_50.png)
+![1200 e 50](./img/param_1200_50.png)
 
 ## Conclusão
 
-Podemos concluir que as duas maneiras apresentadas são eficientes para paralelizar o algoritmo de Voronoi, provaram ser 2 vezes mais rápidas na execução, apresentando um tempo médio decorrido de 4 segundos no primeiro teste e 11 segundos no segundo teste, cerca de 64% mais rápido que a versão sequencial.
+Concluímos que ambas as abordagens são eficazes para paralelizar o algoritmo de Voronoi. As versões paralelas se mostraram duas vezes mais rápidas na execução, com tempo médio de 4 segundos no primeiro teste e 11 segundos no segundo teste, aproximadamente 64% mais rápidas que a versão sequencial.
 
-Com isso, concluimos que a primeira alternativa de paralelização apresentada no código `parallel_voronoi_1.cpp` é preferível para paralelização do algoritmo por não paralelizar as 2 iterações que existem no algoritmo, como na segunda maneira apresentada.
+A primeira alternativa de paralelização, apresentada no código `parallel_voronoi_1.cpp`, é preferível por não paralelizar as duas iterações presentes no algoritmo, como feito na segunda alternativa.
 
 ## Fontes
 
-https://youtu.be/I6Fen2Ac-1U?si=YycZ3wpFmRtNuTD3
-https://math.stackexchange.com/questions/361412/finding-the-angle-between-three-points
+- [Vídeo explicativo](https://youtu.be/I6Fen2Ac-1U?si=YycZ3wpFmRtNuTD3)
+- [Cálculo do Ângulo](https://math.stackexchange.com/questions/361412/finding-the-angle-between-three-points)
