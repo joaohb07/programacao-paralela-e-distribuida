@@ -1,16 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <cmath>
 #include <iostream>
 #include <cstdio>
 #include <deque>
 #include <chrono>
-#include <C:\Users\Jao Brum\Documents\PROJETO ALEXANDRO\programacao-paralela-e-distribuida\points_gen.h>
+#include <omp.h>
+#include "../programacao-paralela-e-distribuida/points_gen.h"
 
 #define MAXIMO (3.40283 * pow(10, 38))
-#define BOXMAX 200
-
 using namespace std;
 
 class Point
@@ -254,7 +251,6 @@ deque<Point> New_Cell(Cell oldcell, Point p, Point q)
   }
 
   // Aqui à remoção dos pontos que ficaram de fora para a nova celula
-  // Eu devia melhorar isso, não encontrei um pop que funciona-se direito aqui
   for (Point a : oldcell.listpoints)
   {
     bool is_on = true;
@@ -345,42 +341,43 @@ int main(int argc, char* argv[])
 
   int i = 0;
 
-  cout << "\n\n###PONTOS###\n\n";
-  for (Point point : lpnts)
-  {
-    i++;
-    cout << "[" << point.x << "," << point.y << "]";
-    if(i<lpnts.size())
-    {
-       cout << ",";
-    }
-  }
+//Essa parte é utilizada apenas para debug do algoritimo
+  // cout << "\n\n###PONTOS###\n\n";
+  // for (Point point : lpnts)
+  // {
+  //   i++;
+  //   cout << "[" << point.x << "," << point.y << "]";
+  //   if(i<lpnts.size())
+  //   {
+  //      cout << ",";
+  //   }
+  // }
 
 
-  cout << "\n\n###CELULAS###\n\n";
+  // cout << "\n\n###CELULAS###\n\n";
 
-  i = 0;
-  int j = 0;
-  for (Cell cell : cells)
-  {
-    j++;
-    i=0;
-    cout << "[";
-    for (Point point : cell.listpoints)
-    {
-      i++;
-      cout << "[" << point.x << "," << point.y << "]";
-      if(i<cell.listpoints.size())
-        {
-            cout << ",";
-        }
-    }
-    cout << "]";
-    if(j<cells.size())
-        {
-            cout << ",";
-        }
-  }
+  // i = 0;
+  // int j = 0;
+  // for (Cell cell : cells)
+  // {
+  //   j++;
+  //   i=0;
+  //   cout << "[";
+  //   for (Point point : cell.listpoints)
+  //   {
+  //     i++;
+  //     cout << "[" << point.x << "," << point.y << "]";
+  //     if(i<cell.listpoints.size())
+  //       {
+  //           cout << ",";
+  //       }
+  //   }
+  //   cout << "]";
+  //   if(j<cells.size())
+  //       {
+  //           cout << ",";
+  //       }
+  // }
 
   return 0;
 }

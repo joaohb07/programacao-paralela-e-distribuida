@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <cmath>
 #include <iostream>
 #include <cstdio>
 #include <deque>
@@ -10,8 +8,6 @@
 #include "../programacao-paralela-e-distribuida/points_gen.h"
 
 #define MAXIMO (3.40283 * pow(10, 38))
-#define BOXMAX 200
-
 using namespace std;
 
 class Point
@@ -130,6 +126,7 @@ Point intersec_Bi_Pnt(deque<float> Bi, Point A, Point B)
     return intersec;
 }
 
+//Função para organização dos pontos em sentindo Anti horario
 deque<Point> Sort_Points_Anti_Clockwise(deque<Point> list, Point p, float boxsize)
 {
     deque<Point> oldlist = list;
@@ -269,7 +266,6 @@ deque<Point> New_Cell(Cell oldcell, Point p, Point q)
     }
 
     // Aqui à remoção dos pontos que ficaram de fora para a nova celula
-    // Eu devia melhorar isso, não encontrei um pop que funciona-se direito aqui
     for (Point a : oldcell.listpoints)
     {
         bool is_on = true;
@@ -304,9 +300,9 @@ deque<Cell> Voronoi(Cell box, deque<Point> listpoints,float boxsize)
         local_cell.p = p;        // Define o ponto central da célula local.
 
         // Início da paralelização com OpenMP para o segundo loop
-//#pragma omp parallel for
+//#pragma omp for
 //Uma sem o pragma
-#pragma omp for
+#pragma omp parallel for
         for (int j = 0; j < listpoints.size(); j++)
         {
             Point q = listpoints[j];      // Seleciona um ponto para comparar com o ponto central p.
@@ -373,42 +369,43 @@ int main(int argc, char* argv[])
 
   int i = 0;
 
-  cout << "\n\n###PONTOS###\n\n";
-  for (Point point : lpnts)
-  {
-    i++;
-    cout << "[" << point.x << "," << point.y << "]";
-    if(i<lpnts.size())
-    {
-       cout << ",";
-    }
-  }
+//Essa parte é utilizada apenas para debug do algoritimo
+  //   cout << "\n\n###PONTOS###\n\n";
+//   for (Point point : lpnts)
+//   {
+//     i++;
+//     cout << "[" << point.x << "," << point.y << "]";
+//     if(i<lpnts.size())
+//     {
+//        cout << ",";
+//     }
+//   }
 
 
-  cout << "\n\n###CELULAS###\n\n";
+//   cout << "\n\n###CELULAS###\n\n";
 
-  i = 0;
-  int j = 0;
-  for (Cell cell : cells)
-  {
-    j++;
-    i=0;
-    cout << "[";
-    for (Point point : cell.listpoints)
-    {
-      i++;
-      cout << "[" << point.x << "," << point.y << "]";
-      if(i<cell.listpoints.size())
-        {
-            cout << ",";
-        }
-    }
-    cout << "]";
-    if(j<cells.size())
-        {
-            cout << ",";
-        }
-  }
+//   i = 0;
+//   int j = 0;
+//   for (Cell cell : cells)
+//   {
+//     j++;
+//     i=0;
+//     cout << "[";
+//     for (Point point : cell.listpoints)
+//     {
+//       i++;
+//       cout << "[" << point.x << "," << point.y << "]";
+//       if(i<cell.listpoints.size())
+//         {
+//             cout << ",";
+//         }
+//     }
+//     cout << "]";
+//     if(j<cells.size())
+//         {
+//             cout << ",";
+//         }
+//   }
 
   return 0;
 }
