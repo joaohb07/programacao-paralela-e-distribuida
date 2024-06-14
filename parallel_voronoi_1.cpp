@@ -369,7 +369,7 @@ int main(int argc, char* argv[])
 
   int i = 0;
 
-//Essa parte é utilizada apenas para debug dos pontos
+//Essa parte é utilizada apenas para debug do algoritimo
 //   cout << "\n\n###PONTOS###\n\n";
 //   for (Point point : lpnts)
 //   {
