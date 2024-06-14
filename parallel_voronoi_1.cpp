@@ -266,7 +266,6 @@ deque<Point> New_Cell(Cell oldcell, Point p, Point q)
     }
 
     // Aqui à remoção dos pontos que ficaram de fora para a nova celula
-    // Eu devia melhorar isso, não encontrei um pop que funciona-se direito aqui
     for (Point a : oldcell.listpoints)
     {
         bool is_on = true;
