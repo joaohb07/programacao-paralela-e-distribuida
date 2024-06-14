@@ -1,16 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <cmath>
 #include <iostream>
 #include <cstdio>
 #include <deque>
 #include <chrono>
-#include <C:\Users\Jao Brum\Documents\PROJETO ALEXANDRO\programacao-paralela-e-distribuida\points_gen.h>
+#include <omp.h>
+#include "../programacao-paralela-e-distribuida/points_gen.h"
 
 #define MAXIMO (3.40283 * pow(10, 38))
-#define BOXMAX 200
-
 using namespace std;
 
 class Point
