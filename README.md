@@ -76,38 +76,15 @@ Para cada ponto P no conjunto faça:
     setores.adicionar(setor_p)
 ```
 
-## Como Rodar
-
-### Versão Sequencial
-
-Para compilar e executar a versão sequencial:
+## Como Rodar (Apenas com Docker)
 
 ```bash
-g++ sequential.cpp -o sequential.exe
-./sequential.exe
-```
-
-### Versão Paralela 1
-
-Para compilar e executar a versão paralela 1 utilizando OpenMP:
-
-```bash
-g++ -fopenmp parallel_voronoi_1.cpp -o parallel_voronoi_1.exe
-./parallel_voronoi_1.exe
-```
-
-### Versão Paralela 2
-
-Para compilar e executar a versão paralela 2 utilizando OpenMP:
-
-```bash
-g++ -fopenmp parallel_voronoi_2.cpp -o parallel_voronoi_2.exe
-./parallel_voronoi_2.exe
+./run_scripts.sh 1000 50 
 ```
 
 ### Pré-requisito
 
-- Ter o g++ e OpenMP instalados.
+- Ter Docker instalado.
 
 ## Exemplo
 

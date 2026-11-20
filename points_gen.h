@@ -1,7 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstdio>
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+#include <random>
+#include <fstream>
+#include <string>
 #include <deque>
 
 using namespace std;

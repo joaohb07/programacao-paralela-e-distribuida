@@ -5,7 +5,7 @@
 #include <deque>
 #include <chrono>
 #include <omp.h>
-#include "../programacao-paralela-e-distribuida/points_gen.h"
+#include "points_gen.h"
 
 #define MAXIMO (3.40283 * pow(10, 38))
 using namespace std;
